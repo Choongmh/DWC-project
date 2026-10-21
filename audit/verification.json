@@ -1,0 +1,13 @@
+{
+  "master_shape": [
+    100,
+    129
+  ],
+  "forecast_cells_verified": 2400,
+  "date_count_per_case": 80,
+  "last_date": "2028-01-01",
+  "template_sha256": "1cbb76ee14ad220b296c5a8c7536d82bf133ae1adf33dc8f5ea3ae2534b4977e",
+  "remote_verified": false,
+  "pbix_open_refresh_verified": false,
+  "docx_visual_render_verified": false
+}

@@ -1,0 +1,31 @@
+{
+  "status": "completed",
+  "started_utc": "2026-10-13T06:30:02.909743+00:00",
+  "test_case_ids": [
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100
+  ],
+  "model_sha256": "752f713e4cdc5697e74df116c4dceaef889d737cb63ad47c3202624c80704c22",
+  "automatic_tuning": false,
+  "prediction_batches": 1,
+  "cache_sha256": "dca1b98d4baa750fae5ae990c6bc800a611f7265cc83cc22900744e320903622",
+  "corrections": {
+    "count": 203,
+    "max_over_fit_scale": 5.365439907132477e-06
+  },
+  "report_sha256": "26fb0d1a03b9247cb9dca67edc9c01bc738d509fd4fe9c4a6518ce2ebce69ccd",
+  "test_numeric_gates_passed": true
+}
