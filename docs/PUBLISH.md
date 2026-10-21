@@ -14,7 +14,21 @@ git add .
 git commit -m "Include complete challenge data and study materials"
 ```
 
-If the four task branches already exist, keep them and update them to the complete integrated snapshot before your first publication. Do not force-update a branch containing new independent work. The initial preparation branches are intended as starting points for subsequent study, not invented historical work.
+The four task branches already exist. After the data commit, fast-forward each to the complete integrated snapshot before first publication:
+
+```powershell
+git switch t1-data
+git merge --ff-only main
+git switch t2-proxy
+git merge --ff-only main
+git switch t3-forecast
+git merge --ff-only main
+git switch t4-storytelling
+git merge --ff-only main
+git switch main
+```
+
+If a fast-forward fails, inspect the branch history rather than force-updating it. The initial preparation branches are starting points for subsequent study, not invented historical work.
 
 Create an empty public repository named `dwc2026-portfolio` under Choongmh in GitHub, without adding an extra README or license. Once it exists, use:
 

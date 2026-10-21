@@ -1,0 +1,23 @@
+{
+  "deferred_lfs_files": [
+    "video/t2 exon.mp4",
+    "docs/original/DataWorks 2026 - Kick Off.pptx",
+    "data/raw/01 Introduction.xlsx",
+    "data/raw/02 Field Production.xlsx",
+    "data/raw/03 Train Cases 1.xlsx",
+    "data/raw/04 Train Cases 2.xlsx",
+    "data/raw/05 Train Cases 3.xlsx",
+    "data/raw/06 Train Cases 4.xlsx",
+    "data/raw/07  Validation Cases.xlsx",
+    "data/raw/08 Test Cases.xlsx",
+    "data/raw/09 Template Deliverable.xlsx"
+  ],
+  "branches": [
+    "main",
+    "t1-data",
+    "t2-proxy",
+    "t3-forecast",
+    "t4-storytelling"
+  ],
+  "published": false
+}
