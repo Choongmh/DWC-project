@@ -1,8 +1,20 @@
 # Reservoir History Matching and Production Forecasting
+This repository presents an end-to-end reservoir engineering workflow that combines machine learning and dynamic reservoir simulation to predict long-term field performance. Built around a Gaussian Process (GP) proxy model, this project accelerates the history matching process, enabling rapid parameter search, precise alignment with historical production data, and robust production forecasting through January 2028.
 
-An independent learning and portfolio edition for **Choongmh**, based on the completed Intern's Level DataWorks Challenge 2026 team project.
+Alongside the core modeling pipeline developed for the ExxonMobil Malaysia DataWorks Challenge (DWC 2026), the repository includes interactive Power BI dashboards, an executive presentation, raw datasets, and a beginner-friendly learning workbook for those exploring ML-assisted reservoir workflows.
 
-This project uses a Gaussian-process proxy of reservoir simulation, searches for parameter sets that match observed production history, and builds oil, gas and water scenarios through January 2028. It also includes the original Power BI report, presentation, data and a beginner learning workbook.
+## Problem & Objectives
+Traditional history matching relies on computationally expensive full-physics reservoir simulators. Running iterative simulations to condition geological parameters against observed field production creates a severe bottleneck when quantifying uncertainty and generating forecasts.
+
+This project aims to:
+
+Train a fast, accurate Gaussian Process proxy to approximate simulator outputs at a fraction of the cost.
+
+Efficiently search and calibrate key subsurface parameter sets against observed historical production.
+
+Build highly detailed multi-phase production forecasts (Oil, Gas, Water) through January 2028.
+
+Deliver clear visual storytelling and comprehensive documentation to bridge the gap between data science and reservoir engineering.
 
 ## Start here
 
@@ -25,20 +37,28 @@ This project uses a Gaussian-process proxy of reservoir simulation, searches for
 
 `main` is the integrated project. The four branches begin from this same integrated snapshot so each can run independently; their names identify the focus of subsequent work, not four invented historical implementations.
 
-## Data and saved results
+## Data & ML Architecture
+Git LFS Requirement
+The complete local dataset is stored under data/raw/. Because the raw workbooks are large, this repository requires Git Large File Storage (LFS).
+- Install Git LFS locally.
+- Clone the repository.
+- Run git lfs pull to retrieve the full datasets.
 
-The complete local data is under `data/raw/`. Large raw workbooks use Git LFS. Install Git LFS before cloning, then run `git lfs pull`. Files 03–08 are optional reservoir-grid inputs for this implementation; the core pipeline uses 01, 02 and 09. Public distribution is being prepared on the project owner's confirmation that sharing is permitted after the challenge.
+Proxy Model Specifications
+The GP proxy model maps 4 reservoir parameters to 123 historical cumulative outputs (covering three streams across 41 quarterly dates from January 1998 to January 2008).
 
-The model maps four reservoir parameters to 123 historical cumulative outputs: three streams on 41 quarterly dates from January 1998 to January 2008. Cases 1–70 are development training, 71–85 validation, and 86–100 final test. The frozen final model was fitted on cases 1–85.
+- Training Split: Cases 1–70 (Development Training)
+- Validation Split: Cases 71–85
+- Test Split: Cases 86–100
+- The frozen final model was fitted using Cases 1–85.
 
-The saved final forecast has ten cases and 80 future quarters. The January 2028 median cumulative totals for the main scenario are approximately 59.75 million STB oil, 21.71 million MSCF gas and 87.60 million STB water. These include historical production before 2008.
+Final Forecast Results
+The saved final forecast comprises 10 selected cases mapped across 80 future quarters. Including historical production prior to 2008, the median cumulative totals for the main scenario by January 2028 are:
+
+- Oil: ~59.75 million STB
+- Gas: ~21.71 million MSCF
+- Water: ~87.60 million STB
 
 ## Interpretation
 
 The best generated history score is about 0.003454 versus 0.003559 for simulator Case 6. This small difference does not establish a clear improvement. The proxy describes historical simulator behaviour; forecasting to 2028 requires separate decline and water models. Selected-case quantiles are descriptive scenario summaries, not calibrated probabilities. Production alone does not establish profitability.
-
-## Source and status
-
-Original repository: https://github.com/khoonlyn913/dwc2026-internlvl
-
-This local edition was assembled from the final submission archive, the T2 working folder and local deliverables. Live upstream completeness has not yet been verified because the original repository requires accessible GitHub authentication. Publishing to `Choongmh` remains a separate step; this README is not evidence that upload has succeeded.
