@@ -23,14 +23,7 @@ This branch contains the presentation deliverables. Data and modelling code are 
 To work from the supplied PBIX instead, open it in Power BI Desktop, inspect its queries and update the source paths to your downloaded data. Then refresh and check the visuals. Opening and refreshing this recovered PBIX in Power BI Desktop has not yet been verified.
 
 ## Presentation notes
-
-The slides are the original submission. When presenting them, use these clarifications:
-
 - P50 means the median of ten selected scenarios, not necessarily the most likely outcome. These scenarios are not calibrated probabilities. Existing dashboard cards use maxima, not P50.
 - The water-cap assumption uses nine quarter-ending observations from January 2006 through January 2008, not eight. It is not a measured facility limit.
 - The quoted score improvement is a descriptive comparison of proxy and simulator scores. The cold test does not independently validate the full long-term forecast; small cumulative errors can also hide larger rate errors.
 - Profitability was a motivating question, but the project does not calculate costs, revenue or NPV.
-
-## Credits
-
-Based on the DataWorks 2026 team submission by Choong Ming Hang, Koay Khoon Lyn, Tan Pei Ying and Lam Zhuo Yi. Original source: [dwc2026-internlvl](https://github.com/khoonlyn913/dwc2026-internlvl). This repository is a personal portfolio and study edition.
