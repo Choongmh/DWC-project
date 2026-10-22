@@ -1,6 +1,6 @@
 # T2 — Predicting reservoir production with machine learning
 
-T2 builds a **proxy model (代理模型)**: a machine-learning approximation of a reservoir simulator. Given four reservoir parameters, it estimates cumulative oil, gas and water production over 1998–2008. T3 uses this model to explore different reservoir settings.
+T2 builds a **proxy model**: a machine-learning approximation of a reservoir simulator. Given four reservoir parameters, it estimates cumulative oil, gas and water production over 1998–2008. T3 uses this model to explore different reservoir settings.
 
 ## Inputs and outputs
 
@@ -16,9 +16,9 @@ The output is **123 values**: total oil, gas and water produced up to each of 41
 ## How it works
 
 1. **Start with T1's cleaned data.** The master table contains 100 simulation cases, their four inputs and their production curves.
-2. **Compare models on cases 1–70.** Cross-validation (交叉验证) compares a mean-curve baseline, Ridge regression, boosted trees and Gaussian Process models. Scaling and curve compression are fitted within each training fold to prevent data leakage (数据泄漏).
+2. **Compare models on cases 1–70.** Cross-validation compares a mean-curve baseline, Ridge regression, boosted trees and Gaussian Process models. Scaling and curve compression are fitted within each training fold to prevent data leakage.
 3. **Validate on cases 71–85.** Check curve accuracy, production rates and how well the model ranks cases against field history.
-4. **Fit the final model on cases 1–85.** The selected method uses PCA (主成分分析) to compress the curves and Gaussian Process regression with a Matérn 2.5 kernel to predict them. Oil, gas and water are modelled separately.
+4. **Fit the final model on cases 1–85.** The selected method uses PCA to compress the curves and Gaussian Process regression with a Matérn 2.5 kernel to predict them. Oil, gas and water are modelled separately.
 5. **Evaluate once on cases 86–100.** These held-out cases provide the saved final test results. Export the model for T3.
 
 Training targets are **simulated production curves**. Observed field history is used for scoring and comparison, not as the training target.
@@ -75,9 +75,3 @@ print(curves.shape)  # (1, 123): oil, gas and water, each with 41 dates
 ```
 
 Use a separate copy for training experiments because development commands overwrite saved reports. Start with `python -m src.proxy --help`. Keep the final evaluation guard intact; do not rerun `proxy_final --prepare` or `--final` over the published model.
-
-## Project context and credits
-
-This is the T2 branch of [DWC-project](https://github.com/Choongmh/DWC-project/tree/main), a personal portfolio and study edition of the DataWorks 2026 team submission. Choong Ming Hang worked on T2. The original team also included Koay Khoon Lyn, Tan Pei Ying and Lam Zhuo Yi.
-
-Original source: [dwc2026-internlvl](https://github.com/khoonlyn913/dwc2026-internlvl). Imported code and results retain their team attribution; no new licence is imposed on those materials.
