@@ -2,7 +2,18 @@
 
 Personal portfolio and learning edition for **Choongmh**, based on the Intern's Level DataWorks Challenge 2026 team project.
 
-This project prepares reservoir simulation data, builds a machine-learning proxy, searches for settings matching observed history, and forecasts oil, gas and water production through January 2028.
+This project combines machine learning with supplied reservoir simulation data to study long-term field performance. A Gaussian Process (GP) proxy supports rapid parameter search and comparison with historical production, followed by separate oil, gas and water forecasting models through January 2028.
+
+Alongside the modeling pipeline developed for the ExxonMobil Malaysia DataWorks Challenge 2026, the repository includes a Power BI dashboard, presentation materials, raw datasets and a beginner learning workbook.
+
+## Problem and objectives
+
+Full-physics reservoir simulations can be expensive to repeat when searching for settings that match observed production. This project uses a proxy to explore many parameter combinations efficiently.
+
+- Approximate historical simulator outputs using a Gaussian Process proxy.
+- Search reservoir parameter settings for close matches to observed field history.
+- Produce oil, gas and water scenarios through January 2028.
+- Explain results, assumptions and limitations through Power BI and presentation materials.
 
 ## Choose a task
 
