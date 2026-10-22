@@ -17,8 +17,6 @@ The best existing simulator match is **Case 6**, with a history score of approxi
 | `.gitattributes` | Sends large Excel files through Git LFS |
 | `.gitignore` | Excludes environments, caches, temporary files and credential files |
 
-The tests are optional when running the pipeline, but useful after changing scoring code. They are public verification code, not private notes. The `.gitignore` rules allow the challenge datasets; the large workbooks are tracked through Git LFS.
-
 ## Setup and run
 
 Use Python 3.12. From this branch's root:
@@ -163,13 +161,3 @@ assert y_train.shape == (70, 123)
 ```
 
 T2 uses the master table and proxy metrics. T3 uses observed history, shared scoring and derived rates. T4 uses T1's findings, ranking and figures to explain the data and baseline.
-
-## Source and other tracks
-
-This README incorporates the technical content of **DWC2026 — T1 Hand-off: Data, Scoring & Baseline**, dated 10 October 2026 and credited to **@Khoonlyn**, adapted to this portfolio's current branch structure and final methodological caveats.
-
-Original submission: **Intern's Level, Universiti Malaya**. The supplied title slide lists Choong Ming Hang, Koay Khoon Lyn, Tan Pei Ying and Lam Zhuo Yi. Original repository: https://github.com/khoonlyn913/dwc2026-internlvl. This is Choongmh's personal learning and portfolio edition of that team project; original contribution credits remain applicable. No new license is imposed on imported materials.
-
-[Complete project and learning workbook](https://github.com/Choongmh/DWC-project/tree/main) · [T2 proxy](https://github.com/Choongmh/DWC-project/tree/t2-proxy) · [T3 forecast](https://github.com/Choongmh/DWC-project/tree/t3-forecast) · [T4 storytelling](https://github.com/Choongmh/DWC-project/tree/t4-storytelling).
-
-Each task branch is intentionally focused. Do not merge `main` wholesale into this branch, because that would restore unrelated task files.
