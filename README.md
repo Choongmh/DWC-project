@@ -1,58 +1,76 @@
 # Reservoir History Matching and Production Forecasting
 
-Personal portfolio and learning edition for **Choongmh**, based on the Intern's Level DataWorks Challenge 2026 team project.
+This DataWorks 2026 project prepares reservoir simulation data, builds a machine-learning proxy, searches for settings that match field history, and forecasts oil, gas and water production through January 2028. Power BI and presentation slides explain the findings.
 
-This project combines machine learning with supplied reservoir simulation data to study long-term field performance. A Gaussian Process (GP) proxy supports rapid parameter search and comparison with historical production, followed by separate oil, gas and water forecasting models through January 2028.
+**Main contains the complete T1–T4 workflow.** Each task branch contains its own focused files and explanation.
 
-Alongside the modeling pipeline developed for the ExxonMobil Malaysia DataWorks Challenge 2026, the repository includes a Power BI dashboard, presentation materials, raw datasets and a beginner learning workbook.
+## The four stages
 
-## Problem and objectives
+| Stage | What happens | Main result |
+| --- | --- | --- |
+| [T1 — Data preparation](https://github.com/Choongmh/DWC-project/tree/t1-data) | Clean workbooks, align dates, define scoring and compare simulator cases against field history | Prepared tables, baseline ranking and sensitivity analysis |
+| [T2 — Proxy modelling](https://github.com/Choongmh/DWC-project/tree/t2-proxy) | Learn the relationship between four reservoir parameters and simulated production | Saved Gaussian Process model and evaluation reports |
+| [T3 — History matching and forecasting](https://github.com/Choongmh/DWC-project/tree/t3-forecast) | Search 50,000 parameter combinations, select ten diverse near-best matches and forecast production | Forecast tables, charts and completed Excel deliverable |
+| [T4 — Dashboard and presentation](https://github.com/Choongmh/DWC-project/tree/t4-storytelling) | Explain results through interactive visuals and slides | Power BI report and PowerPoint presentation |
 
-Full-physics reservoir simulations can be expensive to repeat when searching for settings that match observed production. This project uses a proxy to explore many parameter combinations efficiently.
+T2 maps four inputs—fault transmissibility, porosity multiplier, permeability multiplier and aquifer pore volume—to **123 historical values**: oil, gas and water at 41 quarterly dates from 1998 to 2008. T3 uses separate decline and water models to forecast beyond that period.
 
-- Approximate historical simulator outputs using a Gaussian Process proxy.
-- Search reservoir parameter settings for close matches to observed field history.
-- Produce oil, gas and water scenarios through January 2028.
-- Explain results, assumptions and limitations through Power BI and presentation materials.
+## Repository contents
 
-## Choose a task
-
-| Branch | What it contains |
-|---|---|
-| [main](https://github.com/Choongmh/DWC-project/tree/main) | Complete integrated project and learning workbook |
-| [t1-data](https://github.com/Choongmh/DWC-project/tree/t1-data) | Raw inputs, cleaning, scoring, baseline and sensitivity |
-| [t2-proxy](https://github.com/Choongmh/DWC-project/tree/t2-proxy) | Proxy modeling, evaluation, trained artifact and necessary data helpers |
-| [t3-forecast](https://github.com/Choongmh/DWC-project/tree/t3-forecast) | History matching, forecasting, selected results and frozen proxy dependency |
-| [t4-storytelling](https://github.com/Choongmh/DWC-project/tree/t4-storytelling) | Power BI, slides, video, presentation references and supporting results |
-
-Each task branch has a focused README and only the files relevant to that track. Main retains the full workflow. Do not merge main wholesale into a task branch: doing so would bring unrelated files back. Use targeted changes or cherry-pick relevant commits instead.
-
-## Main folder guide
-
-| Folder | Purpose |
-|---|---|
-| `src/` | T1–T3 Python implementation |
-| `data/` | Original workbooks and prepared modeling tables |
-| `models/` | Frozen proxy and metadata |
-| `outputs/` | Saved metrics, plots and final filled forecast workbook |
+| Folder | Contents |
+| --- | --- |
+| `data/raw/` | Original Excel workbooks and blank deliverable template; large files use Git LFS |
+| `data/processed/` | Prepared T1 tables and cached final T2 evaluation |
+| `src/` | T1–T3 implementation and shared helpers |
+| `models/` | Frozen T2 model and metadata |
+| `outputs/` | Metrics, selected cases, forecasts, charts and final Excel workbook |
+| `tests/` | Automated checks of scoring and proxy behaviour |
 | `dashboard/` | Power BI report |
-| `presentations/` and `video/` | Original presentation and available T2 video |
+| `presentations/` | Project PowerPoint slides |
 | `learning/` | Beginner Word workbook covering T1–T4 |
-| `docs/` | Reproduction guide, sources, attribution and presentation corrections |
-| `tests/` | Existing automated checks |
 
-Start with [the learning workbook](learning/DWC2026_Learning_Workbook.docx), [run instructions](docs/REPRODUCE.md), or [presentation corrections](docs/PRESENTATION_CORRECTIONS.md).
+Start with [the learning workbook](learning/DWC2026_Learning_Workbook.docx), [result charts](outputs/figures/) or [the final Excel deliverable](outputs/09%20Template%20Deliverable_filled.xlsx).
+
+## Run the integrated workflow
+
+Use Python 3.12 and Git LFS. From the repository folder in PowerShell:
+
+```powershell
+git lfs pull
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+Prepared tables, the trained model and saved results are already included. To regenerate data preparation and forecasts, use a separate working copy because these commands overwrite generated outputs:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.load_data
+.\.venv\Scripts\python.exe -m src.baseline
+.\.venv\Scripts\python.exe -m src.sensitivity
+.\.venv\Scripts\python.exe -m src.optimise
+.\.venv\Scripts\python.exe -m src.t3_curves
+.\.venv\Scripts\python.exe -m src.forecast_all
+.\.venv\Scripts\python.exe -m src.fill_template
+.\.venv\Scripts\python.exe -m src.p10_p50_p90
+.\.venv\Scripts\python.exe -m src.water_cap_sensitivity
+```
+
+These commands reuse the frozen T2 model. For model-development experiments, follow the T2 guide in a separate copy. Do not rerun `proxy_final --prepare` or `--final` over the published artifacts or delete its evaluation guard.
+
+The core workflow uses workbooks 01, 02 and 09. Workbooks 03–08 are optional grid inputs retained with T1's complete source data. Run the commands in order: `t3_curves` creates the intermediate curves needed for forecasting.
+
+## Dashboard and presentation
+
+Open `dashboard/exon_recovered.pbix` in Power BI Desktop and update its data-source paths. Use `outputs/t3_top10_params.csv`, `outputs/t3_top10_curves.csv` and `outputs/t3_forecast_all.csv`, with observed history in `data/processed/history.parquet`. Select the `main` forecast scenario for the primary report. Follow the [T4 guide](https://github.com/Choongmh/DWC-project/tree/t4-storytelling#how-to-build-the-dashboard) for table preparation, relationships and visuals.
+
+Original slides are in `presentations/`. Native opening and refreshing of the recovered PBIX remains unverified.
 
 ## Results and interpretation
 
-The proxy maps four reservoir parameters to 123 historical outputs on 41 quarterly dates. Development cases are 1–70, validation cases 71–85, and final test cases 86–100. The selected configuration was fitted on cases 1–85 before final testing.
-
-The main forecast contains ten selected scenarios and 80 future quarters. January 2028 median cumulative totals are approximately 59.75 million STB oil, 21.71 million MSCF gas and 87.60 million STB water, including production before 2008.
-
-The best generated history score is about 0.003454 versus 0.003559 for simulator Case 6. That small difference does not establish a clear improvement. Forecasts use separate decline and water models. Scenario quantiles are descriptive, not calibrated probabilities; production alone does not establish profitability.
-
-## Data and source
-
-Raw Excel workbooks use Git LFS. After cloning, run `git lfs pull`. Optional grid workbooks 03–08 are retained on main and T1; the core pipeline uses workbooks 01, 02 and 09.
-
-Original source: https://github.com/khoonlyn913/dwc2026-internlvl. See [attribution](docs/ATTRIBUTION.md) and [source map](docs/SOURCE_MAP.md). The project was assembled from local final-submission materials; comparison against the original repository's latest remote contents remains unverified.
+- T2 uses cases 1–70 for development, 71–85 for validation and 86–100 for the held-out test. The final model is fitted on cases 1–85. Mean test NRMSE is approximately **0.000219 oil, 0.000203 gas and 0.000460 water**. These measure agreement with simulator curves, not future real-world accuracy.
+- The final workbook contains **2,400 values**: ten cases × 80 future quarters × three cumulative production streams, from April 2008 to January 2028.
+- The best generated history score is about **0.003454**, versus **0.003559** for simulator Case 6. This small difference is inconclusive. The slides' improvement comparison mixes proxy and simulator scores and should be treated as descriptive.
+- Forecasts depend on extrapolation and assumptions. The liquid cap uses **nine** quarter-ending observations from January 2006 through January 2008, not eight, and is not a measured facility specification. The cold test does not independently validate the complete long-term forecast.
+- **P50 means the median of ten selected cases**, not necessarily the most likely outcome. Scenario quantiles are not calibrated probabilities. Existing dashboard cards use maxima; use explicit date/scenario filters and a median calculation when presenting P50. Small cumulative errors can conceal larger rate errors.
+- Production estimates alone do not establish profitability: this project does not calculate revenue, costs or NPV.
